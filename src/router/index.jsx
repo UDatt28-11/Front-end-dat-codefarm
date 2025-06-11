@@ -17,6 +17,7 @@ import ProductHooksForm from "../pages/admin/ProductHooksForm";
 import ProductListPage from "../pages/admin/ProductListPage";
 import ProductPage from "../pages/admin/ProductPage";
 import ProtectedRoute from "../components/ProtectedRoute";
+import ProfilePage from "../pages/ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "/about", element: <AboutPage /> },
+      { path: "/profile/me/:id", element: <ProfilePage /> },
     ],
   },
   // * Layout Admin
@@ -33,6 +35,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
+        path: "",
         element: <AdminLayout />,
         children: [
           { index: true, element: <DashBoardPage /> },

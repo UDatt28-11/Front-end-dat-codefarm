@@ -23,7 +23,7 @@ const LoginPage = () => {
       if (data.accessToken) {
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("user", JSON.stringify(data.user));
-        nav();
+        nav("/");
       }
       // reset();
       // toast.success("Login successfully!");

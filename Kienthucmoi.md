@@ -19,5 +19,6 @@ Cách 2 dùng emotion
 // 201 tạo tài khoản thành công
 //200 yêu cầu xử lý thành công
 //Protected là 1 component dùng để bảo vệ khi người dùng vào admin
+// JSON web token chỉ hiện dùng trong 1 tiếng thôi
 
 ## May mắn chỉ tới với người tìm hiểu trước và cơ hội chỉ đến với người chăm chỉ
