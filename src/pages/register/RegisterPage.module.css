@@ -1,0 +1,17 @@
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: red;
+  margin: 20px auto;
+}
+.form {
+  padding: 24px 40px;
+  margin: 100px auto;
+  border: 1px solid gray;
+  border-radius: 20px;
+}
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
