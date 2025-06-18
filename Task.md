@@ -1,17 +1,22 @@
-[x] Phân tích yêu cầu và tìm hiểu thiết kế. - 2/6 [x] Cài đặt các thư viện cần thiết - 2/6 [x] Xây dựng project base: routing, utils(tiện ích), hooks, common(chung) components - 2/6 [x] Trang đăng ký, đăng nhập - 2/6 [x] Trang chủ admin - 2/6 [x] Đọc thêm sửa xoá sản phẩm - 2/6
+# Các thư việm cần tao khi code react
 
-[] Trang Home - 4/6
+## 1 . Npm i axios Để callAPI
 
-[] Trang Sản phẩm - 9/6
+## 2 . Npm i react-router-dom để tạo ra bộ định tuyến
 
-[] Các bộ lọc sản phẩm (tìm kiếm, sắp xếp, phân trang, lọc) - 9/6
+## 3 . npm i @emotion/css @emotion/react @emotion/styled thư viện css in js
 
-[] Trang chi tiết sản phẩm - 11/6
+## 4 . npm install react-icons thư viện icon
 
-[] Trang cart (thêm giỏ hàng, cập nhật giỏ hàng, xoá hàng) - 13/6
+## 5 . npm i json-server@0.17.4 làm để RESTful API giả chỉ với một file db.json và Giúp bạn mô phỏng một backend
 
-[] Trang order -> thanh toán - 16/6 [] Popup thanh toán thành công - 16/6
+-- Sau chạy câu lệnh :
+"dev": "concurrently \"vite\" \"json-server --watch db.json --port 3000\"",
 
-[] Trang blog list - 18/6 [] Trang blog detail - 18/6
+## 6 . npm i concurrently làm để Chạy nhiều lệnh npm hoặc node cùng lúc trong một terminal.
 
-[] Cập nhật trạng thái đơn hàng và hoàn thiện dự án [23/6] - Báo cáo.
+## 7 . Npm install react-hook-form React hooks form và cái gì dùng chung là thì dùng hooks
+
+## 8 . npm install @hookform/resolvers zod có resolvers thì zod mới chạy được và zod để schema form
+
+## 9 . npm i react-toastify thư viện
