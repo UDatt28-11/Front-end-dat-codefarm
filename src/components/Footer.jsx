@@ -34,6 +34,7 @@ const Container = styled.div`
 
 const FooterTop = styled.div`
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   margin-bottom: 60px;
@@ -154,6 +155,7 @@ const SubscribeForm = styled.form`
 const FooterBottom = styled.div`
   padding-top: 30px;
   border-top: 1px solid #e5e5e5;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -243,7 +245,7 @@ const Footer = () => {
             <ContactInfo>
               <p>
                 <FaMapMarkerAlt />
-                Số 12 Đình Thôn Mỹ Đình Hà Nội
+                Xóm 5 Vạn Kim Mỹ Đức Hà Nội
               </p>
               <p>
                 <FaPhoneAlt />+ 84 33596870

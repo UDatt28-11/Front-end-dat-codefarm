@@ -344,21 +344,21 @@ const Header = ({ onMenuClick }) => {
             <MainMenu>
               <MenuList>
                 <MenuItem>
-                  <a href="" to={"/"} className="active">
+                  <a href="/" to={"/"} className="active">
                     Trang Chủ
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <a href="#">Danh Mục</a>
+                  <a href="/products">Cửa Hàng</a>
                 </MenuItem>
                 <MenuItem>
-                  <a href="#">Cửa Hàng</a>
+                  <a href="/about">Giới Thiệu</a>
                 </MenuItem>
                 <MenuItem>
-                  <a href="#">Trang</a>
+                  <a href="/blogs">Tin Tức</a>
                 </MenuItem>
                 <MenuItem>
-                  <a href="#">Tin Tức</a>
+                  <a href="/contact">Liên Hệ</a>
                 </MenuItem>
               </MenuList>
             </MainMenu>
@@ -370,7 +370,7 @@ const Header = ({ onMenuClick }) => {
               <Link to={"/auth/login"} title="Tài khoản">
                 <FaUser />
               </Link>
-              <a href="/wishlist" title="Yêu thích">
+              <a href="/profile/wishlist" title="Yêu thích">
                 <FaHeart />
                 <span className=""></span>
               </a>
