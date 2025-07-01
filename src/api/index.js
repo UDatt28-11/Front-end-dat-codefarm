@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://back-end-dat-codefarm-k01.onrender.com/api",
+  baseURL: "http://localhost:8888",
   headers: {
     "Content-Type": "application/json",
   },

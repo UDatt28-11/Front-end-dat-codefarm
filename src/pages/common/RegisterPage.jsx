@@ -1,32 +1,59 @@
 import React from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, Link } from "react-router-dom";
+import { registerApi } from "../../api/authApi";
 
 const RegisterPage = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const navigate = useNavigate();
+  const password = watch("password");
+
+  const onSubmit = async (data) => {
+    console.log("Register data:", data);
+    try {
+      await registerApi({
+        fullName: data.fullName,
+        email: data.email,
+        password: data.password,
+      });
+
+      alert("Đăng ký thành công! Vui lòng đăng nhập.");
+      navigate("/api/auth/login");
+    } catch (error) {
+      console.log(error.response?.data);
+      alert(error.response?.data?.message || "Đăng ký thất bại!");
+    }
+  };
+
   return (
-    <div>
-      <h1>Register now!!!</h1>
+    <div className="container mt-5" style={{ maxWidth: "500px" }}>
+      <h1 className="mb-4">Register Now!</h1>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
-          <label htmlFor="" className="form-label">
-            Username:
-          </label>
+          <label className="form-label">Full Name:</label>
           <input
             type="text"
             className="form-control"
-            {...register("username", { required: true })}
+            {...register("fullName", { required: "Full name is required" })}
           />
-          {errors?.username && (
-            <span className="text-danger">{errors.username.message}</span>
+          {errors?.fullName && (
+            <span className="text-danger">{errors.fullName.message}</span>
           )}
         </div>
 
         <div className="mb-3">
-          <label htmlFor="" className="form-label">
-            Email:
-          </label>
+          <label className="form-label">Email:</label>
           <input
             type="email"
             className="form-control"
-            {...register("email", { required: true })}
+            {...register("email", { required: "Email is required" })}
           />
           {errors?.email && (
             <span className="text-danger">{errors.email.message}</span>
@@ -34,13 +61,11 @@ const RegisterPage = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="" className="form-label">
-            Password:
-          </label>
+          <label className="form-label">Password:</label>
           <input
             type="password"
             className="form-control"
-            {...register("password", { required: true })}
+            {...register("password", { required: "Password is required" })}
           />
           {errors?.password && (
             <span className="text-danger">{errors.password.message}</span>
@@ -48,13 +73,15 @@ const RegisterPage = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="" className="form-label">
-            Confirm Password:
-          </label>
+          <label className="form-label">Confirm Password:</label>
           <input
             type="password"
             className="form-control"
-            {...register("confirmPassword", { required: true })}
+            {...register("confirmPassword", {
+              required: "Please confirm your password",
+              validate: (value) =>
+                value === password || "Passwords do not match",
+            })}
           />
           {errors?.confirmPassword && (
             <span className="text-danger">
@@ -64,11 +91,13 @@ const RegisterPage = () => {
         </div>
 
         <div className="mb-3">
-          You have an account? <Link to={`/auth/login`}>Login now!</Link>
+          Already have an account? <Link to="/auth/login">Login now!</Link>
         </div>
 
         <div className="mb-3">
-          <button className="btn btn-primary">Register</button>
+          <button type="submit" className="btn btn-primary w-100">
+            Register
+          </button>
         </div>
       </form>
     </div>

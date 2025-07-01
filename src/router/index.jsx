@@ -31,8 +31,8 @@ const router = createBrowserRouter([
   },
   //Layout Empty
   { path: "/verify-email", element: <VerifyEmail /> },
-  { path: "/auth/login", element: <LoginPage /> },
-  { path: "/auth/register", element: <RegisterPage /> },
+  { path: "/api/auth/login", element: <LoginPage /> },
+  { path: "/api/auth/register", element: <RegisterPage /> },
   { path: "*", element: <NotFoundPage /> },
 ]);
 const AppRouter = () => {

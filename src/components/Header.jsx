@@ -367,7 +367,7 @@ const Header = ({ onMenuClick }) => {
               <a href="/search" title="Tìm kiếm">
                 <FaSearch />
               </a>
-              <Link to={"/auth/login"} title="Tài khoản">
+              <Link to={"/api/auth/login"} title="Tài khoản">
                 <FaUser />
               </Link>
               <a href="/profile/wishlist" title="Yêu thích">
