@@ -7,6 +7,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import LoginPage from "../pages/common/LoginPage";
 import NotFoundPage from "../pages/common/NotFoundPage";
 import RegisterPage from "../pages/common/RegisterPage";
+import VerifyEmail from "../pages/common/VerifyEmail";
 
 const router = createBrowserRouter([
   // Layout Client
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
     // ],
   },
   //Layout Empty
+  { path: "/verify-email", element: <VerifyEmail /> },
   { path: "/auth/login", element: <LoginPage /> },
   { path: "/auth/register", element: <RegisterPage /> },
   { path: "*", element: <NotFoundPage /> },
