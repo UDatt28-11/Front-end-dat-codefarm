@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { loginApi } from "../../api/authApi";
+import { message } from "antd"; // ✅ Thêm dòng này
 
 const LoginPage = () => {
   const {
@@ -20,10 +21,14 @@ const LoginPage = () => {
       // Lưu token vào localStorage
       localStorage.setItem("access_token", res.data.token);
 
+      // ✅ Thông báo thành công
+      message.success("Đăng nhập thành công!");
+
       // Điều hướng sau khi đăng nhập thành công
       navigate("/");
     } catch (error) {
-      alert(error.response?.data?.message || "Đăng nhập thất bại!");
+      // ✅ Thông báo lỗi
+      message.error(error.response?.data?.message || "Đăng nhập thất bại!");
     }
   };
 
@@ -70,4 +75,5 @@ const LoginPage = () => {
     </div>
   );
 };
+
 export default LoginPage;
