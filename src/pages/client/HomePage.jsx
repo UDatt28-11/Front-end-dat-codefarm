@@ -7,6 +7,7 @@ import TitleHome from "../../components/TitleHome";
 import CategoryShowcase from "../../components/CategoryShowcase";
 import ProductSection from "../../components/ProductSection";
 import Benefit from "../../components/Benefit";
+import TitleProduct from "../../components/TitleProduct";
 
 export const HeroSectionWrapper = styled.section`
   height: 100vh;
@@ -201,9 +202,10 @@ export default function HomePage() {
         onSlideClick={handleSlideClick}
       />
       <Benefit />
+      <TitleProduct />
       <ProductSection products={products} />
-      <CategoryShowcase />
       <TitleHome />
+      <CategoryShowcase />
     </main>
   );
 }

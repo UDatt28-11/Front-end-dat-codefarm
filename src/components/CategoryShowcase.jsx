@@ -4,11 +4,10 @@ import imgcategory from "../assets/images/category/category.jpg";
 import imgcategory2 from "../assets/images/category/category2.jpg";
 
 const BannerSection = styled.section`
-  padding-top: 2.5rem;
   padding-bottom: 2.5rem;
 
   @media (min-width: 768px) {
-    padding-top: 5rem;
+    padding-top: 1rem;
   }
 `;
 

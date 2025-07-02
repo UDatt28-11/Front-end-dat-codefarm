@@ -1,45 +1,112 @@
 import React from "react";
 import styled from "@emotion/styled";
-const FaithCollectionSection = styled.section`
-  background-color: #fff;
-  padding-bottom: 1rem;
+
+const WhatNewSection = styled.section`
+  padding-top: 2.5rem;
+
+  @media (min-width: 768px) {
+    padding-top: 5rem;
+  }
 `;
 
-const ContentContainer = styled.div`
-  max-width: 800px;
+const Container = styled.div`
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 1rem;
+  padding: 0 1rem;
+`;
+
+const Heading = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 `;
 
-const Title = styled.h1`
-  font-size: 2.8rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+const HeadingTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 600;
+`;
+
+const MenuTab = styled.div`
+  background-color: #f8f8f8;
+  border-radius: 1rem;
+  margin-top: 1.5rem;
+`;
+
+const Menu = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  position: relative;
+`;
+
+const Indicator = styled.div`
+  position: absolute;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  width: 100px;
+  background: white;
+  border-radius: 9999px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+`;
+
+const TabItem = styled.div`
+  position: relative;
+  color: #999;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &.active,
+  &:hover {
+    color: #000;
+  }
 `;
 
-const Description = styled.p`
-  font-size: 1rem;
-  color: #333;
-  line-height: 1.6;
-  margin-bottom: 2rem;
+const ProductList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
-const TitleHome = () => (
-  <FaithCollectionSection>
-    <ContentContainer>
-      <Title>Bộ sưu tập June</Title>
-      <Description>
-        Mùa hè là thời điểm tuyệt vời để bạn tận hưởng không khí ngoài trời và
-        thử thách bản thân với những bài tập thể thao năng động. Bộ sưu tập sản
-        phẩm thể thao mùa hè của chúng tôi mang đến những thiết kế nhẹ nhàng,
-        thoáng khí và co giãn tối đa, giúp bạn luôn thoải mái dù tập luyện dưới
-        trời nắng.
-      </Description>
-    </ContentContainer>
-  </FaithCollectionSection>
-);
+const TitleHome = () => {
+  return (
+    <WhatNewSection>
+      <Container>
+        <Heading>
+          <HeadingTitle>What's new</HeadingTitle>
+          <MenuTab>
+            <Menu>
+              <Indicator />
+              <TabItem data-item="top">top</TabItem>
+              <TabItem className="active" data-item="t-shirt">
+                t-shirt
+              </TabItem>
+              <TabItem data-item="dress">dress</TabItem>
+              <TabItem data-item="sets">sets</TabItem>
+              <TabItem data-item="shirt">shirt</TabItem>
+            </Menu>
+          </MenuTab>
+        </Heading>
+
+        <ProductList>{/* TODO: Render list sản phẩm ở đây */}</ProductList>
+      </Container>
+    </WhatNewSection>
+  );
+};
 
 export default TitleHome;

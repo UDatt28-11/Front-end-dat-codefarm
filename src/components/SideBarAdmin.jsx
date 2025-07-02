@@ -102,13 +102,13 @@ const SidebarAdmin = ({ collapsed, onToggle }) => {
         </NavItem>
 
         <NavItem>
-          <StyledLink to="products" $collapsed={collapsed}>
+          <StyledLink to="categories" $collapsed={collapsed}>
             <FiBox />
             <span>Categories </span>
           </StyledLink>
         </NavItem>
         <NavItem>
-          <StyledLink to="product" $collapsed={collapsed}>
+          <StyledLink to="products" $collapsed={collapsed}>
             <FiBox />
             <span>Products </span>
           </StyledLink>
