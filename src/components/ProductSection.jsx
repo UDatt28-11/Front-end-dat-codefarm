@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 import styled from "@emotion/styled";
+import ProductCard from "./products/ProductCard";
+// Đảm bảo đường dẫn đúng
 
 const SectionWrapper = styled.section`
   max-width: 1200px;
@@ -29,27 +31,9 @@ const ProductSlider = styled.div`
   }
 `;
 
-const ProductCard = styled.div`
+const ProductCardWrapper = styled.div`
   min-width: 260px;
-  background: #fff;
-  border-radius: 16px;
-
-  overflow: hidden;
-  text-align: center;
-  img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-  }
-  h3 {
-    font-size: 1rem;
-    margin: 12px 0 4px 0;
-  }
-  p {
-    color: #222;
-    font-weight: 600;
-    margin-bottom: 12px;
-  }
+  flex-shrink: 0;
 `;
 
 const NavButton = styled.button`
@@ -61,12 +45,13 @@ const NavButton = styled.button`
   border-radius: 50%;
   width: 36px;
   height: 36px;
-
   cursor: pointer;
   z-index: 2;
+
   &:first-of-type {
     left: -18px;
   }
+
   &:last-of-type {
     right: -18px;
   }
@@ -87,12 +72,10 @@ export default function ProductSection({ title, products }) {
       <CarouselWrapper>
         <NavButton onClick={() => scroll(-300)}>&lt;</NavButton>
         <ProductSlider ref={sliderRef}>
-          {products.map((item) => (
-            <ProductCard key={item.id}>
-              <img src={item.thumbnail} alt={item.title} />
-              <h3>{item.title}</h3>
-              <p>{item.price}₫</p>
-            </ProductCard>
+          {products.map((product) => (
+            <ProductCardWrapper key={product._id}>
+              <ProductCard product={product} />
+            </ProductCardWrapper>
           ))}
         </ProductSlider>
         <NavButton onClick={() => scroll(300)}>&gt;</NavButton>

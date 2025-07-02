@@ -3,14 +3,17 @@ import styled from "@emotion/styled";
 import { FaHeart, FaRedo } from "react-icons/fa";
 
 const Card = styled.div`
+  transition: transform 0.2s;
+  margin-top: 20px; /* 👈 Thêm dòng này */
   border: none;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
-  border-radius: 0.5rem;
-  overflow: hidden;
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
 const ImageWrapper = styled.div`
   position: relative;
+  border: none;
 `;
 
 const ProductImage = styled.img`
@@ -18,6 +21,7 @@ const ProductImage = styled.img`
   height: 300px;
   object-fit: cover;
   border-radius: 0.75rem;
+  border: none;
 `;
 
 const Badge = styled.span`
@@ -50,7 +54,6 @@ const IconButton = styled.button`
 `;
 
 const CardBody = styled.div`
-  padding: 1rem;
   text-align: center;
 `;
 
@@ -60,7 +63,6 @@ const ProductName = styled.h6`
 
 const PriceBlock = styled.div`
   margin-bottom: 0.5rem;
-
   span {
     margin-left: 0.5rem;
   }
@@ -69,7 +71,6 @@ const PriceBlock = styled.div`
 const ActionGroup = styled.div`
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
 `;
 
 const ActionButton = styled.button`
@@ -110,7 +111,9 @@ const ProductCard = ({ product }) => {
               ${product.oldPrice.toFixed(3)}
             </span>
           )}
-          {product.discount && <span style={{ color: "green" }}>-{product.discount}%</span>}
+          {product.discount && (
+            <span style={{ color: "green" }}>-{product.discount}%</span>
+          )}
         </PriceBlock>
         <ActionGroup>
           <ActionButton>Quick View</ActionButton>
