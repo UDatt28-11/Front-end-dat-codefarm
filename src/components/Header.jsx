@@ -331,7 +331,7 @@ const LoginPopup = styled.div`
   left: 50%;
   transform: translateX(-50%);
 
-  width: 220px;
+  width: 180px;
   padding: 12px;
   border-radius: 10px;
   background: white;
@@ -345,10 +345,6 @@ const Header = ({ onMenuClick }) => {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
-
-  // const handleUserClick = () => {
-  //   setIsLoginPopupOpen(!isLoginPopupOpen);
-  // };
 
   return (
     <header>
