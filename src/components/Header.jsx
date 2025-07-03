@@ -278,10 +278,77 @@ const SocialLinks = styled.div`
     }
   }
 `;
+const ButtonBlack = styled(Link)`
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 12px 28px;
+  font-weight: 600;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  text-decoration: none;
+  transition: background 0.3s;
+  cursor: pointer;
+  border: 1px solid #222;
+
+  &:hover {
+    background: #222;
+    border: 1px solid #ddd;
+  }
+`;
+
+const RegisterLink = styled(Link)`
+  color: #000;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 12px 28px;
+  border: 1px solid #222;
+  transition: background 0.3s;
+
+  &:hover {
+    color: #fff;
+    background: #222;
+  }
+`;
+
+const HoverBridge = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  height: 15px;
+  width: 220px;
+  z-index: 5;
+`;
+
+const LoginPopup = styled.div`
+  position: absolute;
+  top: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 220px;
+  padding: 12px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: ${(props) => (props.isOpen ? "block" : "none")};
+  z-index: 10;
+`;
 
 const Header = ({ onMenuClick }) => {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
+
+  // const handleUserClick = () => {
+  //   setIsLoginPopupOpen(!isLoginPopupOpen);
+  // };
 
   return (
     <header>
@@ -310,19 +377,31 @@ const Header = ({ onMenuClick }) => {
               Khách hàng mới giảm <span>10%</span> với mã <span>GET10</span>
             </Announcement>
             <SocialLinks>
-              <a href="https://www.facebook.com/" target="_blank">
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <FaFacebookF />
               </a>
-              <a href="https://www.instagram.com/" target="_blank">
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <FaInstagram />
               </a>
-              <a href="https://www.youtube.com/" target="_blank">
+              <a
+                href="https://www.youtube.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <FaYoutube />
               </a>
-              <a href="https://twitter.com/" target="_blank">
+              <a href="https://twitter.com/" target="_blank" rel="noreferrer">
                 <FaTwitter />
               </a>
-              <a href="https://pinterest.com/" target="_blank">
+              <a href="https://pinterest.com/" target="_blank" rel="noreferrer">
                 <FaPinterestP />
               </a>
             </SocialLinks>
@@ -337,47 +416,67 @@ const Header = ({ onMenuClick }) => {
               <FaBars />
             </MobileMenuIcon>
 
-            <Logo href="/">
+            <Link to="/">
               <img src="../../src/assets/icon.png" width={"110px"} alt="" />
-            </Logo>
+            </Link>
 
             <MainMenu>
               <MenuList>
                 <MenuItem>
-                  <a href="/" to={"/"} className="active">
+                  <Link to="/" className="active">
                     Trang Chủ
-                  </a>
+                  </Link>
                 </MenuItem>
                 <MenuItem>
-                  <a href="/products">Cửa Hàng</a>
+                  <Link to="/products">Cửa Hàng</Link>
                 </MenuItem>
                 <MenuItem>
-                  <a href="/about">Giới Thiệu</a>
+                  <Link to="/about">Giới Thiệu</Link>
                 </MenuItem>
                 <MenuItem>
-                  <a href="/blogs">Tin Tức</a>
+                  <Link to="/blogs">Tin Tức</Link>
                 </MenuItem>
                 <MenuItem>
-                  <a href="/contact">Liên Hệ</a>
+                  <Link to="/contact">Liên Hệ</Link>
                 </MenuItem>
               </MenuList>
             </MainMenu>
 
             <RightMenu>
-              <a href="/search" title="Tìm kiếm">
+              <Link to="/search" title="Tìm kiếm">
                 <FaSearch />
-              </a>
-              <Link to={"/api/auth/login"} title="Tài khoản">
-                <FaUser />
               </Link>
-              <a href="/profile/wishlist" title="Yêu thích">
+
+              <div
+                onMouseEnter={() => setIsLoginPopupOpen(true)}
+                onMouseLeave={() => setIsLoginPopupOpen(false)}
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <FaUser style={{ fontSize: 20 }} />
+
+                {/* Phần tử bắc cầu hover */}
+                <HoverBridge />
+
+                {/* Popup đăng nhập */}
+                <LoginPopup isOpen={isLoginPopupOpen}>
+                  <ButtonBlack to="/api/auth/login">ĐĂNG NHẬP</ButtonBlack>
+                  <RegisterLink to="/api/auth/register">ĐĂNG KÝ</RegisterLink>
+                </LoginPopup>
+              </div>
+
+              <Link to="/profile/wishlist" title="Yêu thích">
                 <FaHeart />
                 <span className=""></span>
-              </a>
-              <a href="/cart" title="Giỏ hàng">
+              </Link>
+              <Link to="/cart" title="Giỏ hàng">
                 <FaShoppingBag />
                 <span className=""></span>
-              </a>
+              </Link>
             </RightMenu>
           </HeaderContent>
         </Container>

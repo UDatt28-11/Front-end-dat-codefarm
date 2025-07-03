@@ -24,9 +24,10 @@ const RegisterPage = () => {
         password: data.password,
       });
 
-      // ✅ Sử dụng messageApi thay vì message trực tiếp
-      messageApi.success("Đăng ký thành công! Vui lòng đăng nhập.");
-      navigate("/api/auth/login");
+      messageApi.success("Đăng ký thành công! Vui lòng xác nhận email.");
+      setTimeout(() => {
+        navigate("/api/auth/login");
+      }, 1000);
     } catch (error) {
       console.log(error.response?.data);
 

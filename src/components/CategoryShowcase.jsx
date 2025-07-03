@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import imgcategory from "../assets/images/category/category.jpg";
 import imgcategory2 from "../assets/images/category/category2.jpg";
+import { Link } from "react-router-dom";
 
 const BannerSection = styled.section`
   padding-bottom: 2.5rem;
@@ -77,25 +78,28 @@ const CategoryShowcase = () => {
   return (
     <BannerSection>
       <GridWrapper>
-        <BannerItem href="/products">
-          <img src={imgcategory} alt="Men Wear" />
-          <BannerContent>
-            <Heading>MEN WEAR</Heading>
-            <Description>
-              Nhập JuneNew Giảm 30k đơn đầu tiên từ 199k
-            </Description>
-            <Button>KHÁM PHÁ</Button>
-          </BannerContent>
-        </BannerItem>
-
-        <BannerItem href="/products">
-          <img src={imgcategory2} alt="Women Active" />
-          <BannerContent>
-            <Heading>WOMEN ACTIVE</Heading>
-            <Description>Tặng Cốc cho đơn từ 500k | Freeship</Description>
-            <Button>KHÁM PHÁ</Button>
-          </BannerContent>
-        </BannerItem>
+        <Link to="/products">
+          <BannerItem>
+            <img src={imgcategory} alt="Men Wear" />
+            <BannerContent>
+              <Heading>MEN WEAR</Heading>
+              <Description>
+                Nhập JuneNew Giảm 30k đơn đầu tiên từ 199k
+              </Description>
+              <Button>KHÁM PHÁ</Button>
+            </BannerContent>
+          </BannerItem>
+        </Link>
+        <Link to="/products">
+          <BannerItem>
+            <img src={imgcategory2} alt="Women Active" />
+            <BannerContent>
+              <Heading>WOMEN ACTIVE</Heading>
+              <Description>Tặng Cốc cho đơn từ 500k | Freeship</Description>
+              <Button>KHÁM PHÁ</Button>
+            </BannerContent>
+          </BannerItem>
+        </Link>
       </GridWrapper>
     </BannerSection>
   );
