@@ -4,7 +4,7 @@ const ContactPage = () => {
   return (
     <div>
       <div className="container py-5">
-        {/* Title & Breadcrumb */}
+        {/* Tiêu đề & Breadcrumb */}
         <div className="text-center mb-5">
           <h2 className="fw-bold">Liên Hệ</h2>
           <nav aria-label="breadcrumb">
@@ -19,13 +19,13 @@ const ContactPage = () => {
           </nav>
         </div>
 
-        {/* Form & Info */}
+        {/* Form & Thông tin */}
         <div className="row mb-5">
-          {/* Contact Form */}
+          {/* Form liên hệ */}
           <div className="col-md-7 mb-4">
-            <h4 className="fw-bold">Drop Us A Line</h4>
+            <h4 className="fw-bold">Gửi Tin Nhắn Cho Chúng Tôi</h4>
             <p className="text-muted">
-              Use the form below to get in touch with our team.
+              Sử dụng biểu mẫu bên dưới để liên hệ với đội ngũ của chúng tôi.
             </p>
             <form>
               <div className="row g-3">
@@ -33,7 +33,7 @@ const ContactPage = () => {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Your Name *"
+                    placeholder="Họ và tên *"
                     required
                   />
                 </div>
@@ -41,46 +41,43 @@ const ContactPage = () => {
                   <input
                     type="email"
                     className="form-control"
-                    placeholder="Your Email *"
+                    placeholder="Email của bạn *"
                     required
                   />
                 </div>
                 <div className="col-12">
                   <textarea
                     className="form-control"
-                    placeholder="Your Message *"
+                    placeholder="Nội dung tin nhắn *"
                     rows="5"
                     required
                   ></textarea>
                 </div>
                 <div className="col-12">
                   <button type="submit" className="btn btn-dark px-4">
-                    SEND MESSAGE
+                    GỬI TIN NHẮN
                   </button>
                 </div>
               </div>
             </form>
           </div>
 
-          {/* Contact Info */}
+          {/* Thông tin liên hệ */}
           <div className="col-md-5">
-            <h5 className="fw-bold">Our Store</h5>
+            <h5 className="fw-bold">Cửa Hàng Của Chúng Tôi</h5>
+            <p>Xóm 5 Vạn Kim Mỹ Đức Hà Nội</p>
             <p>
-              2163 Phillips Gap Rd, West Jefferson, North Carolina, United
-              States
+              <strong>Điện thoại:</strong> + 84 33596870
             </p>
             <p>
-              <strong>Phone:</strong> +1 666 8888
-            </p>
-            <p>
-              <strong>Email:</strong> hi.avitex@gmail.com
+              <strong>Email:</strong> udat2811@gmail.com
             </p>
 
-            <h5 className="fw-bold mt-4">Open Hours</h5>
+            <h5 className="fw-bold mt-4">Giờ Mở Cửa</h5>
             <ul className="list-unstyled">
-              <li>Mon - Fri: 7:30am – 8:00pm PST</li>
-              <li>Saturday: 8:00am – 6:00pm PST</li>
-              <li>Sunday: 9:00am – 5:00pm PST</li>
+              <li>Thứ 2 - Thứ 6: 7:30 – 20:00</li>
+              <li>Thứ 7: 8:00 – 18:00</li>
+              <li>Chủ Nhật: 9:00 – 17:00</li>
             </ul>
           </div>
         </div>
@@ -93,7 +90,7 @@ const ContactPage = () => {
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title="Google Map"
+          title="Bản đồ Google"
         ></iframe>
       </div>
     </div>
