@@ -10,7 +10,9 @@ const ContactPage = () => {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb justify-content-center">
               <li className="breadcrumb-item">
-                <a href="/">Trang Chủ</a>
+                <a href="/" style={{ textDecoration: "none", color: "#222" }}>
+                  Trang Chủ
+                </a>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
                 Liên Hệ

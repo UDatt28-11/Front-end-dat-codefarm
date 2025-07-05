@@ -18,7 +18,10 @@ const Breadcrumb = () => {
     <BreadcrumbNav>
       <ol>
         <li>
-          <a href="/">Trang Chủ</a> /
+          <a href="/" style={{ textDecoration: "none", color: "#222" }}>
+            Trang Chủ
+          </a>{" "}
+          /
         </li>
         <li>Cửa Hàng</li>
       </ol>
