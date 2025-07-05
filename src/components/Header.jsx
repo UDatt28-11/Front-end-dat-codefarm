@@ -127,15 +127,6 @@ const HeaderContent = styled.div`
   gap: 40px;
 `;
 
-const Logo = styled.a`
-  font-size: 28px;
-  font-weight: 700;
-  color: #000;
-  text-decoration: none;
-  font-family: "Jost", sans-serif;
-  letter-spacing: -0.5px;
-`;
-
 const MainMenu = styled.nav`
   flex: 1;
   display: flex;

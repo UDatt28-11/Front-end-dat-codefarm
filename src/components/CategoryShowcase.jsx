@@ -21,7 +21,7 @@ const GridWrapper = styled.div`
   }
 `;
 
-const BannerItem = styled.a`
+const BannerItem = styled(Link)`
   position: relative;
   display: block;
   overflow: hidden;
@@ -78,28 +78,25 @@ const CategoryShowcase = () => {
   return (
     <BannerSection>
       <GridWrapper>
-        <Link to="/products">
-          <BannerItem>
-            <img src={imgcategory} alt="Men Wear" />
-            <BannerContent>
-              <Heading>MEN WEAR</Heading>
-              <Description>
-                Nhập JuneNew Giảm 30k đơn đầu tiên từ 199k
-              </Description>
-              <Button>KHÁM PHÁ</Button>
-            </BannerContent>
-          </BannerItem>
-        </Link>
-        <Link to="/products">
-          <BannerItem>
-            <img src={imgcategory2} alt="Women Active" />
-            <BannerContent>
-              <Heading>WOMEN ACTIVE</Heading>
-              <Description>Tặng Cốc cho đơn từ 500k | Freeship</Description>
-              <Button>KHÁM PHÁ</Button>
-            </BannerContent>
-          </BannerItem>
-        </Link>
+        <BannerItem to="/products">
+          <img src={imgcategory} alt="Men Wear" />
+          <BannerContent>
+            <Heading>MEN WEAR</Heading>
+            <Description>
+              Nhập JuneNew Giảm 30k đơn đầu tiên từ 199k
+            </Description>
+            <Button>KHÁM PHÁ</Button>
+          </BannerContent>
+        </BannerItem>
+
+        <BannerItem to="/products">
+          <img src={imgcategory2} alt="Women Active" />
+          <BannerContent>
+            <Heading>WOMEN ACTIVE</Heading>
+            <Description>Tặng Cốc cho đơn từ 500k | Freeship</Description>
+            <Button>KHÁM PHÁ</Button>
+          </BannerContent>
+        </BannerItem>
       </GridWrapper>
     </BannerSection>
   );

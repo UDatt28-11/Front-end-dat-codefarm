@@ -13,6 +13,7 @@ import ProfilePage from "../pages/client/ProfilePage";
 import TermsPrivacyPage from "../pages/client/TermsPrivacyPage";
 import WishListPage from "../pages/client/WishListPage";
 import CartPage from "./../pages/client/CartPage";
+import CheckoutPage from "./../pages/client/CheckoutPage";
 
 export const clientRoutes = [
   // * Common Routes
@@ -33,6 +34,8 @@ export const clientRoutes = [
 
   // * Cart Router
   { path: "/cart", element: <CartPage /> },
+  // * Checkout Router
+  { path: "/checkout", element: <CheckoutPage /> },
 
   // * User Routes
   { path: "/profile/me/:id", element: <ProfilePage /> },
