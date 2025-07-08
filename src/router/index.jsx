@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ClientLayout from "../layouts/ClientLayout";
 import clientRoutes from "./clientRoutes";
-import ProtectedRoute from "../components/ProtectedRoute";
 import adminRoutes from "./adminRoutes";
 import AdminLayout from "../layouts/AdminLayout";
 import LoginPage from "../pages/common/LoginPage";
 import NotFoundPage from "../pages/common/NotFoundPage";
 import RegisterPage from "../pages/common/RegisterPage";
 import VerifyEmail from "../pages/common/VerifyEmail";
+import ProtectedRoute from "../contexts/ProtectedRoute";
 
 const router = createBrowserRouter([
   // Layout Client
@@ -19,7 +19,11 @@ const router = createBrowserRouter([
   //Layout Admin
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoute>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: adminRoutes,
     // [
     //   {

@@ -1,4 +1,3 @@
-import BlogFormPage from "../pages/admin/BlogFormPage";
 import CategoryFormPage from "../pages/admin/CategoryFormPage";
 import CategoryListPage from "../pages/admin/CategoryListPage";
 import DashBoardPage from "../pages/admin/DashBoardPage";
@@ -6,10 +5,11 @@ import ProductForm from "../pages/admin/ProductForm";
 import ProductListPage from "../pages/admin/ProductListPage";
 import SettingsPage from "../pages/admin/SettingsPage";
 import UserListPage from "../pages/admin/UserListPage";
-import BlogListPage from "../pages/client/BlogListPage";
 import OrderDetailPage from "../pages/client/OrderDetailPage";
 import OrderListPage from "../pages/client/OrderListPage";
 import ProfilePage from "../pages/client/ProfilePage";
+import BlogFormPage from "./../pages/admin/BlogFormPage";
+import BlogListPage from "./../pages/admin/BlogListPage";
 
 export const adminRoutes = [
   // * Common Routes

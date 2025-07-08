@@ -200,6 +200,21 @@ const TotalLine = styled.div`
 const CheckoutPage = () => {
   return (
     <Wrapper>
+      <div className="text-center mb-5">
+        <h2 className="fw-bold">Thanh Toán</h2>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb justify-content-center">
+            <li className="breadcrumb-item">
+              <a href="/" style={{ textDecoration: "none", color: "#222" }}>
+                Trang Chủ
+              </a>
+            </li>
+            <li className="breadcrumb-item active" aria-current="page">
+              Thanh Toán
+            </li>
+          </ol>
+        </nav>
+      </div>
       <Container>
         <MainFlex>
           <Left>

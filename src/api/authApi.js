@@ -4,3 +4,4 @@ import api from ".";
 export const loginApi = (data) => api.post("/api/auth/login", data);
 export const registerApi = (data) => api.post("/api/auth/register", data);
 export const getProfile = (userId) => api.get(`/api/users/${userId}`);
+export const getCheckAdmin = () => api.get("/api/auth/admin-only");

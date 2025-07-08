@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api";
 
 const useProducts = () => {
   const [products, setProducts] = useState([]);
@@ -7,9 +8,7 @@ const useProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          "https://back-end-dat-codefarm-k01.onrender.com/api/products"
-        );
+        const res = await api.get("api/products");
         setProducts(res.data.data || []);
       } catch (err) {
         console.error("Lỗi khi lấy sản phẩm:", err);
