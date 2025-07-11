@@ -24,16 +24,16 @@ const ProductImage = styled.img`
   border: none;
 `;
 
-const Badge = styled.span`
-  position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-  background-color: ${(props) => (props.sale ? "red" : "green")};
-  color: white;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  border-radius: 9999px;
-`;
+// const Badge = styled.span`
+//   position: absolute;
+//   top: 0.5rem;
+//   left: 0.5rem;
+//   background-color: ${(props) => (props.sale ? "red" : "green")};
+//   color: white;
+//   padding: 0.25rem 0.75rem;
+//   font-size: 0.75rem;
+//   border-radius: 9999px;
+// `;
 
 const ActionButtons = styled.div`
   position: absolute;
@@ -75,6 +75,7 @@ const ActionGroup = styled.div`
 
 const ActionButton = styled.button`
   padding: 0.25rem 1rem;
+  margin: 8px;
   border-radius: 9999px;
   font-size: 0.875rem;
   border: 1px solid;
@@ -91,7 +92,7 @@ const ProductCard = ({ product }) => {
   return (
     <Card>
       <ImageWrapper>
-        <Badge sale={product.sale}>{product.sale ? "SALE" : "NEW"}</Badge>
+        {/* <Badge sale={product.sale}>{product.sale ? "SALE" : "NEW"}</Badge> */}
         <ActionButtons>
           <IconButton>
             <FaHeart />
@@ -100,10 +101,10 @@ const ProductCard = ({ product }) => {
             <FaRedo />
           </IconButton>
         </ActionButtons>
-        <ProductImage src={product.thumbnail} alt={product.name} />
+        <ProductImage src={product.thumbnail} alt={product.title} />
       </ImageWrapper>
       <CardBody>
-        <ProductName>{product.name}</ProductName>
+        <ProductName>{product.title}</ProductName>
         <PriceBlock>
           <strong>${product.price?.toFixed(3)}</strong>
           {product.oldPrice && (

@@ -7,13 +7,13 @@ import FAQPage from "../pages/client/FAQPage";
 import HomePage from "../pages/client/HomePage";
 import OrderDetailPage from "../pages/client/OrderDetailPage";
 import OrderListPage from "../pages/client/OrderListPage";
-import ProductDetailPage from "../pages/client/ProductDetailPage";
 import ProductsPage from "../pages/client/ProductsPage";
 import ProfilePage from "../pages/client/ProfilePage";
 import TermsPrivacyPage from "../pages/client/TermsPrivacyPage";
 import WishListPage from "../pages/client/WishListPage";
 import CartPage from "./../pages/client/CartPage";
 import CheckoutPage from "./../pages/client/CheckoutPage";
+import ProductDetailPage from "./../pages/client/ProductDetailPage";
 
 export const clientRoutes = [
   // * Common Routes

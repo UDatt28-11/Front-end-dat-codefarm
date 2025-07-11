@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import styled from "@emotion/styled";
+import { useState } from "react";
+import Breadcrumb from "../../components/products/Breadcrumb";
 import ControlBar from "../../components/products/ControlBar";
 import FilterSidebar from "../../components/products/FilterSidebar";
 import ProductGrid from "../../components/products/ProductGrid";
-import Breadcrumb from "../../components/products/Breadcrumb";
 import useProducts from "../../hooks/useProducts";
-import styled from "@emotion/styled";
+import useQuery from "../../hooks/useQuery";
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -34,8 +35,14 @@ const ProductsPage = () => {
   const [viewMode, setViewMode] = useState("grid");
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("all");
-
-  const products = useProducts();
+  const [query, updateQuery, resetQuery] = useQuery({
+    q: "",
+    page: 1,
+    limit: 9,
+    sortBy: "title",
+    order: "asc",
+  });
+  const products = useProducts(query);
   const filteredProducts =
     filter === "sale"
       ? products.filter((p) => p.sale)
@@ -56,9 +63,10 @@ const ProductsPage = () => {
         sort={sort}
         setSort={setSort}
         filter={filter}
+        query={query}
+        updateQuery={updateQuery}
         setFilter={setFilter}
       />
-
       <Layout>
         <FilterSidebar
           minPrice={minPrice}

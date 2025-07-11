@@ -25,13 +25,6 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: adminRoutes,
-    // [
-    //   {
-    //     path: "",
-    //     element: <AdminLayout />,
-    //     children: adminRoutes,
-    //   },
-    // ],
   },
   //Layout Empty
   { path: "/verify-email", element: <VerifyEmail /> },

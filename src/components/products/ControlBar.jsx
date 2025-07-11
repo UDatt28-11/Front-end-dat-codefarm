@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { FaTh, FaBars } from "react-icons/fa";
+import useQuery from "./../../hooks/useQuery.js";
+import useFetchList from "./../../hooks/useFetchList.js";
+import useProducts from "../../hooks/useProducts.js";
 
 const ControlBarWrapper = styled.div`
   display: flex;
@@ -51,49 +54,83 @@ const Select = styled.select`
   background: white;
   font-size: 0.9rem;
 `;
+const SearchLabel = styled.label`
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  width: 100%;
+  max-width: 600px;
 
-const ControlBar = ({
-  viewMode,
-  setViewMode,
-  sort,
-  setSort,
-  filter,
-  setFilter,
-}) => {
+  input {
+    border: none;
+    outline: none;
+    width: 400px;
+    font-size: 14px;
+    background-color: transparent;
+    color: #333;
+  }
+`;
+
+const ControlBar = ({ query, updateQuery }) => {
+  const sortOPtions = [
+    { label: "Sắp Xếp", value: {} },
+    { label: "Giá Tăng Dần", value: { sortBy: "price", order: "asc" } },
+    { label: "Giá Giảm Dần", value: { sortBy: "price", order: "desc" } },
+    { label: "Tên A-Z", value: { sortBy: "title", order: "asc" } },
+    { label: "Tên từ Z-A", value: { sortBy: "title", order: "desc" } },
+    {
+      label: "Lượt Đánh Giá Cao Nhất",
+      value: { sortBy: "rating", order: "desc" },
+    },
+  ];
+  // Search Product
+  const [products] = useProducts("/api/products", query, {});
+  const handleSearch = (search) => {
+    updateQuery({ q: search, page: 1 });
+  };
   return (
-    <ControlBarWrapper>
-      <ViewMode>
-        <ViewButton
-          active={viewMode === "grid"}
-          onClick={() => setViewMode("grid")}
-        >
-          <FaTh />
-        </ViewButton>
-        <ViewButton
-          active={viewMode === "list"}
-          onClick={() => setViewMode("list")}
-        >
-          <FaBars />
-        </ViewButton>
-        <label>
-          <input
-            type="checkbox"
-            checked={filter === "sale"}
-            onChange={() => setFilter(filter === "sale" ? "all" : "sale")}
-          />
-          <span style={{ marginLeft: "8px" }}>Show only products on sale</span>
-        </label>
-      </ViewMode>
-
-      <SortBlock>
-        <span>Sort By</span>
-        <Select value={sort} onChange={(e) => setSort(e.target.value)}>
-          <option value="">Sorting</option>
-          <option value="asc">Price: Low to High</option>
-          <option value="desc">Price: High to Low</option>
-        </Select>
-      </SortBlock>
-    </ControlBarWrapper>
+    <>
+      <ControlBarWrapper>
+        <ViewMode>
+          <ViewButton>
+            <FaTh />
+          </ViewButton>
+          <ViewButton>
+            <FaBars />
+          </ViewButton>
+          <ViewButton>
+            <label>
+              <input type="checkbox" />
+              <span style={{ marginLeft: "8px" }}>
+                Show only products on sale
+              </span>
+            </label>
+          </ViewButton>
+          <div>
+            <SearchLabel>
+              <input
+                type="text"
+                placeholder="Tìm Kiếm Sản Phẩm"
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </SearchLabel>
+          </div>
+        </ViewMode>
+        <SortBlock>
+          <span>Sort By</span>
+          <Select onChange={(e) => handleSort(e.target.value)}>
+            {sortOPtions.map((opt, index) => (
+              <option key={index} value={index}>
+                {opt.label}
+              </option>
+            ))}
+          </Select>
+        </SortBlock>
+      </ControlBarWrapper>
+    </>
   );
 };
 
