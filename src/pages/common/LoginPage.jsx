@@ -185,8 +185,9 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     try {
       const res = await loginApi(data);
-      console.log(res);
+      // console.log(res);
       localStorage.setItem("accessToken", res.data.data.accessToken);
+      localStorage.setItem("user", JSON.stringify(res.data.data.user));
       message.success("Đăng nhập thành công!");
       navigate("/");
     } catch (error) {

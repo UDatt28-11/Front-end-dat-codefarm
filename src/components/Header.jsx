@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { message } from "antd";
+import { useEffect, useState } from "react";
 import {
   FaFacebookF,
   FaInstagram,
@@ -15,7 +16,7 @@ import {
   FaBars,
 } from "react-icons/fa";
 import { HiChevronDown } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TopNav = styled.div`
   background: #000000;
@@ -336,7 +337,14 @@ const Header = ({ onMenuClick }) => {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
-
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
   return (
     <header>
       <TopNav>
@@ -434,27 +442,62 @@ const Header = ({ onMenuClick }) => {
                 <FaSearch />
               </Link>
 
-              <div
-                onMouseEnter={() => setIsLoginPopupOpen(true)}
-                onMouseLeave={() => setIsLoginPopupOpen(false)}
-                style={{
-                  position: "relative",
-                  display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-              >
-                <FaUser style={{ fontSize: 20 }} />
+              {user ? (
+                <div
+                  onMouseEnter={() => setIsLoginPopupOpen(true)}
+                  onMouseLeave={() => setIsLoginPopupOpen(false)}
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <FaUser style={{ fontSize: 20 }} />
+                  <span style={{ marginLeft: 6, fontSize: 14 }}>
+                    {user.fullName}
+                  </span>
 
-                {/* Phần tử bắc cầu hover */}
-                <HoverBridge />
+                  <HoverBridge />
 
-                {/* Popup đăng nhập */}
-                <LoginPopup isOpen={isLoginPopupOpen}>
-                  <ButtonBlack to="/api/auth/login">ĐĂNG NHẬP</ButtonBlack>
-                  <RegisterLink to="/api/auth/register">ĐĂNG KÝ</RegisterLink>
-                </LoginPopup>
-              </div>
+                  <LoginPopup isOpen={isLoginPopupOpen}>
+                    <ButtonBlack to={`/profile/me/${user.id}`}>
+                      My Profile
+                    </ButtonBlack>
+
+                    <RegisterLink
+                      as="div"
+                      onClick={() => {
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("user");
+                        setUser(null);
+                        message.success("Đăng xuất thành công!");
+                        navigate("/api/auth/login"); // hoặc navigate("/login")
+                      }}
+                    >
+                      ĐĂNG XUẤT
+                    </RegisterLink>
+                  </LoginPopup>
+                </div>
+              ) : (
+                <div
+                  onMouseEnter={() => setIsLoginPopupOpen(true)}
+                  onMouseLeave={() => setIsLoginPopupOpen(false)}
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <FaUser style={{ fontSize: 20 }} />
+                  <HoverBridge />
+                  <LoginPopup isOpen={isLoginPopupOpen}>
+                    <ButtonBlack to="/api/auth/login">ĐĂNG NHẬP</ButtonBlack>
+                    <RegisterLink to="/api/auth/register">ĐĂNG KÝ</RegisterLink>
+                  </LoginPopup>
+                </div>
+              )}
 
               <Link to="/profile/wishlist" title="Yêu thích">
                 <FaHeart />
