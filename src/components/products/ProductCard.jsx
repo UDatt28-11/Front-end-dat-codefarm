@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { FaHeart, FaRedo } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Card = styled.div`
   transition: transform 0.2s;
@@ -23,17 +24,6 @@ const ProductImage = styled.img`
   border-radius: 0.75rem;
   border: none;
 `;
-
-// const Badge = styled.span`
-//   position: absolute;
-//   top: 0.5rem;
-//   left: 0.5rem;
-//   background-color: ${(props) => (props.sale ? "red" : "green")};
-//   color: white;
-//   padding: 0.25rem 0.75rem;
-//   font-size: 0.75rem;
-//   border-radius: 9999px;
-// `;
 
 const ActionButtons = styled.div`
   position: absolute;
@@ -101,10 +91,17 @@ const ProductCard = ({ product }) => {
             <FaRedo />
           </IconButton>
         </ActionButtons>
-        <ProductImage src={product.thumbnail} alt={product.title} />
+        <Link to={`/products/${product.id}`} style={{ display: "block" }}>
+          <ProductImage src={product.thumbnail} alt={product.title} />
+        </Link>
       </ImageWrapper>
       <CardBody>
-        <ProductName>{product.title}</ProductName>
+        <Link
+          to={`/products/${product.id}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <ProductName>{product.title}</ProductName>
+        </Link>
         <PriceBlock>
           <strong>${product.price?.toFixed(3)}</strong>
           {product.oldPrice && (

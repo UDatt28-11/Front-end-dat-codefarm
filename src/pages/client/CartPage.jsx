@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import { getUserCart } from "../../api/cartApi";
+import api from "../../api";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -288,8 +292,32 @@ const QuantityBox = styled.div`
   }
 `;
 const CartPage = () => {
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    (async function () {
+      try {
+        // const { data } = await getUserCart();
+        // console.log(data);
+        // setCart(data.data);
+        const { data } = await axios.get("/api/cart");
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }, []);
   return (
     <Container>
+      <div>
+        {cart &&
+          cart.map((item) => (
+            <div key={item.id}>
+              <h2>{item.product.title}</h2>
+              <p>Price: ${item.product.price}</p>
+              <p>Quantity: {item.quantity}</p>
+            </div>
+          ))}
+      </div>
       <div className="text-center mb-5">
         <h2 className="fw-bold">Giỏ Hàng</h2>
         <nav aria-label="breadcrumb">
