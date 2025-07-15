@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import ProductCard from "./ProductCard";
+import { message } from "antd";
 
 const ProductGridWrapper = styled.div`
   flex: 1;
@@ -42,36 +43,44 @@ const PageButton = styled.button`
   }
 `;
 
-const ProductGrid = ({ products }) => {
+const ProductGrid = ({ products, query, total, updateQuery }) => {
+  const handlePage = (newPage) => {
+    const maxPage = Math.ceil(total / query.limit);
+    if (newPage > maxPage) {
+      message.warning("Không còn sản phẩm nào để hiển thị.");
+      return;
+    }
+    updateQuery({ page: newPage });
+  };
+
   return (
     <>
       <div>
         <ProductGridWrapper>
-          {products &&
-            products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </ProductGridWrapper>
+
         <PaginationWrapper>
           <PageButton
             className="btn-primary"
-            // onClick={() => handlePage(query.page - 1)}
-            // disabled={query.page === 1}
+            onClick={() => handlePage(query.page - 1)}
+            disabled={query.page === 1}
           >
             Prev
           </PageButton>
 
-          <span>Page : {/* {query.page} */}</span>
+          <span>Page: {query.page}</span>
 
           <PageButton
             className="btn-info"
-            // onClick={() => handlePage(query.page + 1)}
+            onClick={() => handlePage(query.page + 1)}
           >
             Next
           </PageButton>
         </PaginationWrapper>
       </div>
-      ;
     </>
   );
 };

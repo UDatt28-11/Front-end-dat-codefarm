@@ -35,6 +35,7 @@ const ProductsPage = () => {
   const [viewMode, setViewMode] = useState("grid");
   const [sort, setSort] = useState("");
   const [filter, setFilter] = useState("all");
+
   const [query, updateQuery, resetQuery] = useQuery({
     q: "",
     page: 1,
@@ -42,7 +43,7 @@ const ProductsPage = () => {
     sortBy: "title",
     order: "asc",
   });
-  const products = useProducts(query);
+  const { products, total } = useProducts(query);
   const filteredProducts =
     filter === "sale"
       ? products.filter((p) => p.sale)
@@ -74,7 +75,12 @@ const ProductsPage = () => {
           setMinPrice={setMinPrice}
           setMaxPrice={setMaxPrice}
         />
-        <ProductGrid products={filteredProducts} />
+        <ProductGrid
+          products={filteredProducts}
+          query={query}
+          total={total}
+          updateQuery={updateQuery}
+        />
       </Layout>
     </Container>
   );

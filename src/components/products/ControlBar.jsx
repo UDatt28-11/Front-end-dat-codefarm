@@ -87,10 +87,17 @@ const ControlBar = ({ query, updateQuery }) => {
     },
   ];
   // Search Product
-  const [products] = useProducts("/api/products", query, {});
+  // const [products] = useProducts("/api/products", query, {});
   const handleSearch = (search) => {
     updateQuery({ q: search, page: 1 });
   };
+  const handleSort = (index) => {
+    const selected = sortOPtions[index].value;
+    if (selected.sortBy) {
+      updateQuery({ ...selected, page: 1 }); // reset về trang 1 khi sắp xếp
+    }
+  };
+
   return (
     <>
       <ControlBarWrapper>
