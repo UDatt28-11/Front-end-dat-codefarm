@@ -36,7 +36,7 @@ const LogoutLink = styled(Link)`
   }
 `;
 
-// === Component chính ===
+
 const HeaderAdmin = () => {
   return (
     <Header>

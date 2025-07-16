@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
-import imgcategory from "../assets/images/category/category.jpg";
-import imgcategory2 from "../assets/images/category/category2.jpg";
+import imgcategory from "../assets/images/category/anh1.jpg";
+import imgcategory2 from "../assets/images/category/anh2.jpg";
 import { Link } from "react-router-dom";
 
 const BannerSection = styled.section`

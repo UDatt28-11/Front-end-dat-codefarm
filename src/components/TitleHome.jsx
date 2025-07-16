@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "@emotion/styled";
 
 const WhatNewSection = styled.section`
@@ -23,48 +23,49 @@ const Heading = styled.div`
 `;
 
 const HeadingTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #222;
 `;
 
 const MenuTab = styled.div`
-  background-color: #f8f8f8;
-  border-radius: 1rem;
-  margin-top: 1.5rem;
+  background-color: #f1f1f1;
+  border-radius: 9999px;
+  padding: 0.5rem;
+  margin-bottom: 2rem;
+  width: fit-content;
 `;
 
 const Menu = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem;
+  gap: 0.25rem;
   position: relative;
 `;
 
 const Indicator = styled.div`
   position: absolute;
-  top: 0.25rem;
-  bottom: 0.25rem;
-  width: 100px;
-  background: white;
+  top: 0;
+  bottom: 0;
   border-radius: 9999px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
 `;
 
 const TabItem = styled.div`
   position: relative;
-  color: #999;
+  color: ${({ active }) => (active ? "#111" : "#666")};
+  background-color: ${({ active }) => (active ? "#fff" : "transparent")};
   text-transform: uppercase;
   font-size: 0.9rem;
-  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
   cursor: pointer;
-  transition: all 0.3s;
-
-  &.active,
-  &:hover {
-    color: #000;
-  }
+  transition: all 0.3s ease;
+  z-index: 1;
 `;
 
 const ProductList = styled.div`
@@ -75,7 +76,7 @@ const ProductList = styled.div`
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 2rem;
   }
 
   @media (min-width: 1280px) {
@@ -83,7 +84,25 @@ const ProductList = styled.div`
   }
 `;
 
+// Danh sách tab
+const tabs = ["top", "t-shirt", "dress", "sets", "shirt"];
+
 const TitleHome = () => {
+  const [activeTab, setActiveTab] = useState("top");
+  const indicatorRef = useRef(null);
+  const tabRefs = useRef({});
+
+  useEffect(() => {
+    const activeElement = tabRefs.current[activeTab];
+    const indicator = indicatorRef.current;
+
+    if (activeElement && indicator) {
+      const { offsetLeft, offsetWidth } = activeElement;
+      indicator.style.left = `${offsetLeft}px`;
+      indicator.style.width = `${offsetWidth}px`;
+    }
+  }, [activeTab]);
+
   return (
     <WhatNewSection>
       <Container>
@@ -91,19 +110,20 @@ const TitleHome = () => {
           <HeadingTitle>What's new</HeadingTitle>
           <MenuTab>
             <Menu>
-              <Indicator />
-              <TabItem data-item="top">top</TabItem>
-              <TabItem className="active" data-item="t-shirt">
-                t-shirt
-              </TabItem>
-              <TabItem data-item="dress">dress</TabItem>
-              <TabItem data-item="sets">sets</TabItem>
-              <TabItem data-item="shirt">shirt</TabItem>
+              <Indicator ref={indicatorRef} />
+              {tabs.map((tab) => (
+                <TabItem
+                  key={tab}
+                  ref={(el) => (tabRefs.current[tab] = el)}
+                  active={tab === activeTab}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab}
+                </TabItem>
+              ))}
             </Menu>
           </MenuTab>
         </Heading>
-
-        <ProductList>{/* TODO: Render list sản phẩm ở đây */}</ProductList>
       </Container>
     </WhatNewSection>
   );

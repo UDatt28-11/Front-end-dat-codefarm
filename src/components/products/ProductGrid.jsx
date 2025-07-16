@@ -57,8 +57,11 @@ const ProductGrid = ({ products, query, total, updateQuery }) => {
     <>
       <div>
         <ProductGridWrapper>
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {products.map((product, index) => (
+            <ProductCard
+              key={product.id || product._id || `product-${index}`}
+              product={product}
+            />
           ))}
         </ProductGridWrapper>
 

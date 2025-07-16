@@ -91,13 +91,13 @@ const ProductCard = ({ product }) => {
             <FaRedo />
           </IconButton>
         </ActionButtons>
-        <Link to={`/products/${product.id}`} style={{ display: "block" }}>
+        <Link to={`/products/${product._id}`} style={{ display: "block" }}>
           <ProductImage src={product.thumbnail} alt={product.title} />
         </Link>
       </ImageWrapper>
       <CardBody>
         <Link
-          to={`/products/${product.id}`}
+          to={`/products/${product._id}`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <ProductName>{product.title}</ProductName>

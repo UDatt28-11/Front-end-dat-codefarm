@@ -1,141 +1,191 @@
-import styled from "@emotion/styled";
+import React, { useState } from "react";
+import { Layout, Menu } from "antd";
 import {
-  FiChevronLeft,
-  FiChevronRight,
-  FiUsers,
-  FiBox,
-  FiClipboard,
-  FiSettings,
-  FiHome,
-  FiEdit,
-} from "react-icons/fi";
-import { NavLink } from "react-router-dom";
-import React from "react";
+  HomeOutlined,
+  TeamOutlined,
+  AppstoreOutlined,
+  ShoppingOutlined,
+  ShoppingCartOutlined,
+  FileTextOutlined,
+  SettingOutlined,
+  PlusCircleOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
-// Helper to prevent custom props like $collapsed from reaching the DOM
-const shouldForwardProp = (prop) => prop !== "$collapsed";
+const { Sider } = Layout;
 
-// Sidebar wrapper
-const SidebarWrapper = styled("div", { shouldForwardProp })`
-  width: ${(props) => (props.$collapsed ? "80px" : "250px")};
-  transition: width 0.3s ease;
-  background-color: #1e293b;
-  color: white;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-`;
+const SidebarAdmin = () => {
+  const [collapsed, setCollapsed] = useState(false);
 
-// Toggle button
-const ToggleButton = styled("button", { shouldForwardProp })`
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 20px;
-  margin-bottom: 20px;
-  align-self: ${(props) => (props.$collapsed ? "center" : "flex-end")};
-`;
+  const menuItems = [
+    {
+      key: "dashboard",
+      icon: <HomeOutlined />,
+      label: (
+        <Link to="/admin" style={{ textDecoration: "none", color: "inherit" }}>
+          Dashboard
+        </Link>
+      ),
+    },
+    {
+      key: "users",
+      icon: <TeamOutlined />,
+      label: (
+        <Link
+          to="/admin/users"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          Users
+        </Link>
+      ),
+    },
+    {
+      key: "categories",
+      icon: <AppstoreOutlined />,
+      label: "Categories",
+      children: [
+        {
+          key: "category-list",
+          icon: <UnorderedListOutlined />,
+          label: (
+            <Link
+              to="/admin/categories"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Category List
+            </Link>
+          ),
+        },
+        {
+          key: "category-add",
+          icon: <PlusCircleOutlined />,
+          label: (
+            <Link
+              to="/admin/categories/add"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Add Category
+            </Link>
+          ),
+        },
+      ],
+    },
+    {
+      key: "products",
+      icon: <ShoppingOutlined />,
+      label: (
+        <Link
+          to="/admin/products"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          Products
+        </Link>
+      ),
+    },
+    {
+      key: "orders",
+      icon: <ShoppingCartOutlined />,
+      label: (
+        <Link
+          to="/admin/orders"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          Orders
+        </Link>
+      ),
+    },
+    {
+      key: "blogs",
+      icon: <FileTextOutlined />,
+      label: (
+        <Link
+          to="/admin/blogs"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          Blogs
+        </Link>
+      ),
+    },
+    {
+      key: "settings",
+      icon: <SettingOutlined />,
+      label: (
+        <Link
+          to="/admin/settings"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          Settings
+        </Link>
+      ),
+    },
+  ];
 
-// Nav list
-const NavList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
-
-const NavItem = styled.li`
-  margin-bottom: 12px;
-`;
-
-const StyledLink = styled(NavLink, { shouldForwardProp })`
-  display: flex;
-  align-items: center;
-  color: #cbd5e1;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 10px 12px;
-  border-radius: 6px;
-  transition: 0.25s ease;
-
-  svg {
-    margin-right: ${(props) => (props.$collapsed ? "0" : "10px")};
-    font-size: 18px;
-  }
-
-  span {
-    display: ${(props) => (props.$collapsed ? "none" : "inline")};
-    transition: opacity 0.2s ease;
-  }
-
-  &.active {
-    background-color: #334155;
-    color: #ffffff;
-  }
-
-  &:hover {
-    background-color: #3b82f6;
-    color: #ffffff;
-  }
-`;
-
-const SidebarAdmin = ({ collapsed, onToggle }) => {
   return (
-    <SidebarWrapper $collapsed={collapsed}>
-      <ToggleButton $collapsed={collapsed} onClick={onToggle}>
-        {collapsed ? <FiChevronRight /> : <FiChevronLeft />}
-      </ToggleButton>
-
-      <NavList>
-        <NavItem>
-          <StyledLink to="" $collapsed={collapsed}>
-            <FiHome />
-            <span>Dashboard</span>
-          </StyledLink>
-        </NavItem>
-
-        <NavItem>
-          <StyledLink to="users" $collapsed={collapsed}>
-            <FiUsers />
-            <span>Users</span>
-          </StyledLink>
-        </NavItem>
-
-        <NavItem>
-          <StyledLink to="categories" $collapsed={collapsed}>
-            <FiBox />
-            <span>Categories </span>
-          </StyledLink>
-        </NavItem>
-        <NavItem>
-          <StyledLink to="products" $collapsed={collapsed}>
-            <FiBox />
-            <span>Products </span>
-          </StyledLink>
-        </NavItem>
-
-        <NavItem>
-          <StyledLink to="orders" $collapsed={collapsed}>
-            <FiClipboard />
-            <span>Orders</span>
-          </StyledLink>
-        </NavItem>
-
-        <NavItem>
-          <StyledLink to="blogs" $collapsed={collapsed}>
-            <FiEdit />
-            <span>Blogs</span>
-          </StyledLink>
-        </NavItem>
-
-        <NavItem>
-          <StyledLink to="settings" $collapsed={collapsed}>
-            <FiSettings />
-            <span>Settings</span>
-          </StyledLink>
-        </NavItem>
-      </NavList>
-    </SidebarWrapper>
+    <Sider
+      collapsible
+      collapsed={collapsed}
+      onCollapse={setCollapsed}
+      width={240}
+      style={{
+        minHeight: "100vh",
+        paddingTop: 0,
+        paddingBottom: 0,
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Menu
+        theme="dark"
+        mode="inline"
+        defaultOpenKeys={["categories"]}
+        defaultSelectedKeys={["dashboard"]}
+        items={menuItems}
+        style={{
+          fontSize: 16,
+          fontWeight: 500,
+          border: "none",
+          padding: "18px 0",
+        }}
+      />
+      <style>{`
+        .ant-menu-dark,
+        .ant-menu-dark .ant-menu,
+        .ant-menu-dark .ant-menu-submenu,
+        .ant-menu-dark .ant-menu-submenu-title,
+        .ant-menu-dark .ant-menu-item {
+          
+        }
+        .ant-menu-dark .ant-menu-item-selected {
+          color: #fff !important;
+          font-weight: 700;
+          
+        }
+        .ant-menu-dark .ant-menu-item,
+        .ant-menu-dark .ant-menu-submenu-title {
+          margin: 6px 0;
+          
+        }
+        .ant-menu-dark .ant-menu-item:hover,
+        .ant-menu-dark .ant-menu-submenu-title:hover {
+          background: #1e293b !important;
+          color: #fff !important;
+          
+        }
+        .ant-layout-sider,
+        .ant-layout-sider-children {
+          background: #181f2a !important;
+        }
+        .ant-layout-sider-trigger {
+          background: #1e293b !important;
+          color: #fff !important;
+          border-radius: 0 !important;
+          font-size: 22px !important;
+          transition: background 0.2s;
+        }
+      
+      `}</style>
+    </Sider>
   );
 };
 

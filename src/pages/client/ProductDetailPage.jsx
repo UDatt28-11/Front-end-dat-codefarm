@@ -1,9 +1,10 @@
-import styled from "@emotion/styled";
-import Breadcrumb from "../../components/products/Breadcrumb";
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import useProducts from "../../hooks/useProducts";
+import styled from "@emotion/styled";
+import { getProductDetail } from "../../api/productApi";
+import Breadcrumb from "../../components/products/Breadcrumb";
 
+// Các styled-components giữ nguyên như bạn đã viết...
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -229,115 +230,94 @@ const GalleryImage = styled.img`
     border: 2px solid #1976d2;
   }
 `;
-
 const ProductDetailPage = () => {
   const { id } = useParams();
-  const products = useProducts();
-  const product = products.find((p) => String(p.id) === String(id));
+  const [product, setProduct] = useState(null);
+  const [mainImg, setMainImg] = useState("");
 
-  // Gallery lấy từ product.images, ảnh chính là thumbnail hoặc ảnh đầu tiên
-  const gallery = useMemo(() => {
-    if (!product) return [];
-    if (product.images && product.images.length > 0) {
-      // Đảm bảo thumbnail luôn là ảnh đầu nếu có
-      const imgs = product.images.includes(product.thumbnail)
-        ? product.images
-        : [
-            product.thumbnail,
-            ...product.images.filter((img) => img !== product.thumbnail),
-          ];
-      return imgs.filter(Boolean);
-    }
-    return [product.thumbnail].filter(Boolean);
-  }, [product]);
+  useEffect(() => {
+    const fetchProductDetail = async () => {
+      try {
+        const res = await getProductDetail(id);
+        console.log(res);
 
-  const [mainImg, setMainImg] = useState(gallery[0] || "");
+        setProduct(res.data);
+        setMainImg(res.data.image); // giả sử sản phẩm có trường 'image'
+      } catch (error) {
+        console.error("Lỗi khi load chi tiết sản phẩm:", error);
+      }
+    };
 
-  // Tags, Dimensions, Variants
-  const tags = product?.tags || [];
-  const dimensions = product?.dimensions || {};
-  const variants = product?.variants || [];
+    fetchProductDetail();
+  }, [id]);
 
-  // Khi đổi sản phẩm, đổi lại mainImg
-  React.useEffect(() => {
-    setMainImg(gallery[0] || "");
-  }, [gallery]);
-
-  if (!product) {
-    return (
+  return (
+    <>
       <Container>
         <TitleBlock>
           <PageTitle>Chi tiết sản phẩm</PageTitle>
           <Breadcrumb />
         </TitleBlock>
-        <div style={{ textAlign: "center", padding: "2rem", color: "#e53935" }}>
-          Không tìm thấy sản phẩm!
-        </div>
+
+        <MainLayout>
+          <GalleryColumn>
+            {/* {gallery.map((img, idx) => (
+              <GalleryImage
+                key={idx}
+                src={img}
+                alt={`Ảnh ${idx + 1}`}
+                onClick={() => setMainImg(img)}
+              />
+            ))} */}
+          </GalleryColumn>
+          <MainImageWrapper>
+            {/* <MainImage src={mainImg} alt="Ảnh chính" /> */}
+            <MainImage src="" alt="Ảnh chính" />
+          </MainImageWrapper>
+          <InfoColumn>
+            <ProductName></ProductName>
+            {/* <ProductName>{product.title}</ProductName> */}
+            <ProductDesc>
+              {/* {product.description || "Không có mô tả cho sản phẩm này."} */}
+              {/* {product.description || "Không có mô tả cho sản phẩm này."} */}
+            </ProductDesc>
+            {/* <ProductPrice>{product.price?.toLocaleString()}₫</ProductPrice> */}
+
+            <ActionButtons>
+              <AddToBagBtn>Thêm vào giỏ hàng</AddToBagBtn>
+              <FavouriteBtn>Yêu thích ♡</FavouriteBtn>
+            </ActionButtons>
+            <Notice>
+              {/* {product.shippingInformation ||
+                "Sản phẩm này không áp dụng khuyến mãi."} */}
+            </Notice>
+          </InfoColumn>
+        </MainLayout>
+
+        <Section>
+          <SectionTitle>Mô tả chi tiết</SectionTitle>
+          {/* <p>{product.description || "Không có mô tả chi tiết."}</p> */}
+        </Section>
+
+        <CommentSection>
+          <CommentTitle>Bình luận về sản phẩm</CommentTitle>
+          <CommentForm>
+            <CommentInput rows={2} placeholder="Nhập bình luận của bạn..." />
+            <CommentButton>Gửi</CommentButton>
+          </CommentForm>
+          <CommentList>
+            <CommentItem>
+              <CommentAuthor>Nguyễn Văn A</CommentAuthor>
+              <CommentText>Sản phẩm rất đẹp, chất lượng tốt!</CommentText>
+            </CommentItem>
+            <CommentItem>
+              <CommentAuthor>Trần Thị B</CommentAuthor>
+              <CommentText>Giao hàng nhanh, đóng gói cẩn thận.</CommentText>
+            </CommentItem>
+          </CommentList>
+        </CommentSection>
       </Container>
-    );
-  }
-
-  return (
-    <Container>
-      <TitleBlock>
-        <PageTitle>Chi tiết sản phẩm</PageTitle>
-        <Breadcrumb />
-      </TitleBlock>
-      <MainLayout>
-        <GalleryColumn>
-          {gallery.map((img, idx) => (
-            <GalleryImage
-              key={idx}
-              src={img}
-              alt={`Ảnh ${idx + 1}`}
-              className={mainImg === img ? "active" : ""}
-              onClick={() => setMainImg(img)}
-            />
-          ))}
-        </GalleryColumn>
-        <MainImageWrapper>
-          <MainImage src={mainImg} alt="Ảnh chính" />
-        </MainImageWrapper>
-        <InfoColumn>
-          <ProductName>{product.title}</ProductName>
-          <ProductDesc>
-            {product.description || "Không có mô tả cho sản phẩm này."}
-          </ProductDesc>
-          <ProductPrice>{product.price?.toLocaleString()}₫</ProductPrice>
-
-          <ActionButtons>
-            <AddToBagBtn>Thêm vào giỏ hàng</AddToBagBtn>
-            <FavouriteBtn>Yêu thích ♡</FavouriteBtn>
-          </ActionButtons>
-          <Notice>
-            {product.shippingInformation ||
-              "Sản phẩm này không áp dụng khuyến mãi."}
-          </Notice>
-        </InfoColumn>
-      </MainLayout>
-      <Section>
-        <SectionTitle>Mô tả chi tiết</SectionTitle>
-        <p>{product.description || "Không có mô tả chi tiết."}</p>
-      </Section>
-
-      <CommentSection>
-        <CommentTitle>Bình luận về sản phẩm</CommentTitle>
-        <CommentForm>
-          <CommentInput rows={2} placeholder="Nhập bình luận của bạn..." />
-          <CommentButton>Gửi</CommentButton>
-        </CommentForm>
-        <CommentList>
-          <CommentItem>
-            <CommentAuthor>Nguyễn Văn A</CommentAuthor>
-            <CommentText>Sản phẩm rất đẹp, chất lượng tốt!</CommentText>
-          </CommentItem>
-          <CommentItem>
-            <CommentAuthor>Trần Thị B</CommentAuthor>
-            <CommentText>Giao hàng nhanh, đóng gói cẩn thận.</CommentText>
-          </CommentItem>
-        </CommentList>
-      </CommentSection>
-    </Container>
+    </>
   );
 };
 
