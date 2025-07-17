@@ -1,3 +1,4 @@
+import BrandListPage from "../pages/admin/BrandListPage";
 import CategoryFormPage from "../pages/admin/CategoryFormPage";
 import CategoryListPage from "../pages/admin/CategoryListPage";
 import DashBoardPage from "../pages/admin/DashBoardPage";
@@ -32,6 +33,8 @@ export const adminRoutes = [
   { path: "blogs", element: <BlogListPage /> },
   { path: "blogs/edit/:id", element: <BlogFormPage /> },
   { path: "blogs/add", element: <BlogFormPage /> },
+  //Brand Routes
+  { path: "brands", element: <BrandListPage /> },
 
   // * User Routes
   { path: "users", element: <UserListPage /> },

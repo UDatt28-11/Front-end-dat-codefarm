@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Card = styled.div`
   transition: transform 0.2s;
-  margin-top: 20px; /* 👈 Thêm dòng này */
+  margin-top: 10px; /* 👈 Thêm dòng này */
   border: none;
   &:hover {
     transform: translateY(-5px);

@@ -16,12 +16,13 @@ const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  margin-top: 24px;
+  // gap: 14px;
+  // margin: 5px 0px;
 `;
 
 const PageButton = styled.button`
-  padding: 8px 16px;
+  margin: 0px 20px;
+  padding: 3px 20px;
   font-size: 14px;
   border-radius: 8px;
   border: none;

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import { getProductDetail } from "../../api/productApi";
 import Breadcrumb from "../../components/products/Breadcrumb";
 
-// Các styled-components giữ nguyên như bạn đã viết...
+// Styled components giữ nguyên...
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -130,16 +130,6 @@ const Notice = styled.div`
   font-size: 1rem;
 `;
 
-const ImageSection = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f8f8f8;
-  border-radius: 12px;
-  min-height: 400px;
-`;
-
 const Section = styled.div`
   margin-top: 2rem;
   background: #fafafa;
@@ -230,6 +220,7 @@ const GalleryImage = styled.img`
     border: 2px solid #1976d2;
   }
 `;
+
 const ProductDetailPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -239,10 +230,9 @@ const ProductDetailPage = () => {
     const fetchProductDetail = async () => {
       try {
         const res = await getProductDetail(id);
-        console.log(res);
-
-        setProduct(res.data);
-        setMainImg(res.data.image); // giả sử sản phẩm có trường 'image'
+        console.log("Dữ liệu sản phẩm:", res.data); // ← Thêm dòng này
+        setProduct(res.data.data);
+        setMainImg(res.data.data.thumbnail || "");
       } catch (error) {
         console.error("Lỗi khi load chi tiết sản phẩm:", error);
       }
@@ -251,73 +241,73 @@ const ProductDetailPage = () => {
     fetchProductDetail();
   }, [id]);
 
+  if (!product) return <p>Đang tải dữ liệu sản phẩm...</p>;
+  const fullImgUrl = mainImg?.startsWith("http")
+    ? mainImg
+    : `http://localhost:8888${mainImg}`;
+
   return (
-    <>
-      <Container>
-        <TitleBlock>
-          <PageTitle>Chi tiết sản phẩm</PageTitle>
-          <Breadcrumb />
-        </TitleBlock>
+    <Container>
+      <TitleBlock>
+        <PageTitle>Chi tiết sản phẩm</PageTitle>
+        <Breadcrumb />
+      </TitleBlock>
 
-        <MainLayout>
-          <GalleryColumn>
-            {/* {gallery.map((img, idx) => (
-              <GalleryImage
-                key={idx}
-                src={img}
-                alt={`Ảnh ${idx + 1}`}
-                onClick={() => setMainImg(img)}
-              />
-            ))} */}
-          </GalleryColumn>
-          <MainImageWrapper>
-            {/* <MainImage src={mainImg} alt="Ảnh chính" /> */}
-            <MainImage src="" alt="Ảnh chính" />
-          </MainImageWrapper>
-          <InfoColumn>
-            <ProductName></ProductName>
-            {/* <ProductName>{product.title}</ProductName> */}
-            <ProductDesc>
-              {/* {product.description || "Không có mô tả cho sản phẩm này."} */}
-              {/* {product.description || "Không có mô tả cho sản phẩm này."} */}
-            </ProductDesc>
-            {/* <ProductPrice>{product.price?.toLocaleString()}₫</ProductPrice> */}
+      <MainLayout>
+        <GalleryColumn>
+          {/* Nếu sau này bạn có nhiều ảnh thì hiển thị ở đây */}
+          {product.images?.map((img, idx) => (
+            <GalleryImage
+              key={idx}
+              src={img}
+              alt={`Ảnh ${idx + 1}`}
+              onClick={() => setMainImg(img)}
+            />
+          ))}
+        </GalleryColumn>
 
-            <ActionButtons>
-              <AddToBagBtn>Thêm vào giỏ hàng</AddToBagBtn>
-              <FavouriteBtn>Yêu thích ♡</FavouriteBtn>
-            </ActionButtons>
-            <Notice>
-              {/* {product.shippingInformation ||
-                "Sản phẩm này không áp dụng khuyến mãi."} */}
-            </Notice>
-          </InfoColumn>
-        </MainLayout>
+        <MainImageWrapper>
+          <MainImage src={fullImgUrl} alt={product?.title || "Ảnh sản phẩm"} />
+        </MainImageWrapper>
 
-        <Section>
-          <SectionTitle>Mô tả chi tiết</SectionTitle>
-          {/* <p>{product.description || "Không có mô tả chi tiết."}</p> */}
-        </Section>
+        <InfoColumn>
+          <ProductName>{product?.title}</ProductName>
+          <ProductDesc>{product?.description || "Không có mô tả."}</ProductDesc>
+          <ProductPrice>{product?.price?.toLocaleString()}₫</ProductPrice>
+          <ActionButtons>
+            <AddToBagBtn>Thêm vào giỏ hàng</AddToBagBtn>
+            <FavouriteBtn>Yêu thích ♡</FavouriteBtn>
+          </ActionButtons>
+          <Notice>
+            {product?.shippingInformation ||
+              "Sản phẩm này không áp dụng khuyến mãi."}
+          </Notice>
+        </InfoColumn>
+      </MainLayout>
 
-        <CommentSection>
-          <CommentTitle>Bình luận về sản phẩm</CommentTitle>
-          <CommentForm>
-            <CommentInput rows={2} placeholder="Nhập bình luận của bạn..." />
-            <CommentButton>Gửi</CommentButton>
-          </CommentForm>
-          <CommentList>
-            <CommentItem>
-              <CommentAuthor>Nguyễn Văn A</CommentAuthor>
-              <CommentText>Sản phẩm rất đẹp, chất lượng tốt!</CommentText>
-            </CommentItem>
-            <CommentItem>
-              <CommentAuthor>Trần Thị B</CommentAuthor>
-              <CommentText>Giao hàng nhanh, đóng gói cẩn thận.</CommentText>
-            </CommentItem>
-          </CommentList>
-        </CommentSection>
-      </Container>
-    </>
+      <Section>
+        <SectionTitle>Mô tả chi tiết</SectionTitle>
+        <p>{product?.description || "Không có mô tả chi tiết."}</p>
+      </Section>
+
+      <CommentSection>
+        <CommentTitle>Bình luận về sản phẩm</CommentTitle>
+        <CommentForm>
+          <CommentInput rows={2} placeholder="Nhập bình luận của bạn..." />
+          <CommentButton>Gửi</CommentButton>
+        </CommentForm>
+        <CommentList>
+          <CommentItem>
+            <CommentAuthor>Nguyễn Văn A</CommentAuthor>
+            <CommentText>Sản phẩm rất đẹp, chất lượng tốt!</CommentText>
+          </CommentItem>
+          <CommentItem>
+            <CommentAuthor>Trần Thị B</CommentAuthor>
+            <CommentText>Giao hàng nhanh, đóng gói cẩn thận.</CommentText>
+          </CommentItem>
+        </CommentList>
+      </CommentSection>
+    </Container>
   );
 };
 

@@ -74,14 +74,33 @@ const SidebarAdmin = () => {
     {
       key: "products",
       icon: <ShoppingOutlined />,
-      label: (
-        <Link
-          to="/admin/products"
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          Products
-        </Link>
-      ),
+      label: "Products",
+      children: [
+        {
+          key: "products-list",
+          icon: <UnorderedListOutlined />,
+          label: (
+            <Link
+              to="/admin/products"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Products List
+            </Link>
+          ),
+        },
+        {
+          key: "products-add",
+          icon: <PlusCircleOutlined />,
+          label: (
+            <Link
+              to="/admin/products/add"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Add Products
+            </Link>
+          ),
+        },
+      ],
     },
     {
       key: "orders",
@@ -92,6 +111,18 @@ const SidebarAdmin = () => {
           style={{ textDecoration: "none", color: "inherit" }}
         >
           Orders
+        </Link>
+      ),
+    },
+    {
+      key: "brands",
+      icon: <ShoppingCartOutlined />,
+      label: (
+        <Link
+          to="/admin/brands"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          Brands
         </Link>
       ),
     },
