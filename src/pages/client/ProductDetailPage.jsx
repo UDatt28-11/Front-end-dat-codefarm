@@ -1,313 +1,206 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import styled from "@emotion/styled";
 import { getProductDetail } from "../../api/productApi";
 import Breadcrumb from "../../components/products/Breadcrumb";
+import {
+  Row,
+  Col,
+  Typography,
+  Button,
+  Divider,
+  Image,
+  Select,
+  InputNumber,
+  Card,
+  message,
+} from "antd";
 
-// Styled components giữ nguyên...
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-`;
-
-const TitleBlock = styled.div`
-  text-align: center;
-  margin-bottom: 2rem;
-`;
-
-const PageTitle = styled.h2`
-  font-weight: bold;
-`;
-
-const MainLayout = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 2.5rem;
-  @media (max-width: 900px) {
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-const GalleryColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-`;
-
-const MainImageWrapper = styled.div`
-  flex: 1.2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 350px;
-  min-height: 420px;
-  background: #f8f8f8;
-  border-radius: 16px;
-`;
-
-const MainImage = styled.img`
-  max-width: 100%;
-  max-height: 420px;
-  border-radius: 12px;
-  object-fit: contain;
-`;
-
-const InfoColumn = styled.div`
-  flex: 1.5;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  min-width: 320px;
-`;
-
-const ProductName = styled.h1`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-`;
-
-const ProductDesc = styled.p`
-  color: #555;
-  line-height: 1.6;
-`;
-
-const ProductPrice = styled.div`
-  font-size: 1.5rem;
-  color: #e53935;
-  font-weight: bold;
-  margin-bottom: 1rem;
-`;
-
-const ActionButtons = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-`;
-
-const AddToBagBtn = styled.button`
-  padding: 1.1rem 0;
-  border: none;
-  border-radius: 32px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  background: #111;
-  color: #fff;
-  cursor: pointer;
-  margin-bottom: 0.5rem;
-  transition: background 0.2s;
-  &:hover {
-    background: #1976d2;
-  }
-`;
-
-const FavouriteBtn = styled.button`
-  padding: 1rem 0;
-  border: 2px solid #eee;
-  border-radius: 32px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  background: #fff;
-  color: #111;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  transition: border 0.2s;
-  &:hover {
-    border: 2px solid #1976d2;
-    color: #1976d2;
-  }
-`;
-
-const Notice = styled.div`
-  margin-top: 1.2rem;
-  color: #888;
-  font-size: 1rem;
-`;
-
-const Section = styled.div`
-  margin-top: 2rem;
-  background: #fafafa;
-  border-radius: 8px;
-  padding: 1.5rem;
-`;
-
-const SectionTitle = styled.h3`
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-`;
-
-const CommentSection = styled.div`
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  padding: 1.5rem;
-  margin-top: 2rem;
-`;
-
-const CommentTitle = styled.h3`
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-`;
-
-const CommentForm = styled.form`
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-`;
-
-const CommentInput = styled.textarea`
-  flex: 1;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  padding: 0.75rem;
-  font-size: 1rem;
-  resize: none;
-`;
-
-const CommentButton = styled.button`
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 6px;
-  background: #1976d2;
-  color: #fff;
-  font-weight: 500;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  &:hover {
-    background: #125ea2;
-  }
-`;
-
-const CommentList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-`;
-
-const CommentItem = styled.div`
-  background: #f8f8f8;
-  border-radius: 6px;
-  padding: 1rem;
-`;
-
-const CommentAuthor = styled.div`
-  font-weight: 500;
-  margin-bottom: 0.3rem;
-`;
-
-const CommentText = styled.div`
-  color: #444;
-`;
-
-const GalleryImage = styled.img`
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 2px solid #eee;
-  cursor: pointer;
-  transition: border 0.2s;
-  &:hover {
-    border: 2px solid #1976d2;
-  }
-`;
+const { Title, Paragraph, Text } = Typography;
+const { Option } = Select;
 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [mainImg, setMainImg] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [stock, setStock] = useState(null);
+  const [selectedVariant, setSelectedVariant] = useState(null);
 
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
         const res = await getProductDetail(id);
-        console.log("Dữ liệu sản phẩm:", res.data); // ← Thêm dòng này
-        setProduct(res.data.data);
-        setMainImg(res.data.data.thumbnail || "");
+        const data = res.data.data;
+        setProduct(data);
+        setMainImg(data?.thumbnail || "");
       } catch (error) {
         console.error("Lỗi khi load chi tiết sản phẩm:", error);
+        message.error("Không thể tải chi tiết sản phẩm");
       }
     };
 
     fetchProductDetail();
   }, [id]);
 
+  useEffect(() => {
+    if (selectedColor && selectedSize && product?.variants) {
+      const found = product.variants.find(
+        (v) =>
+          v.colorId?.name === selectedColor && v.sizeId?.name === selectedSize
+      );
+      setSelectedVariant(found || null);
+      setStock(found?.stock || 0);
+    }
+  }, [selectedColor, selectedSize, product]);
+
   if (!product) return <p>Đang tải dữ liệu sản phẩm...</p>;
+
   const fullImgUrl = mainImg?.startsWith("http")
     ? mainImg
     : `http://localhost:8888${mainImg}`;
 
+  const convertImgUrl = (url) =>
+    url?.startsWith("http") ? url : `http://localhost:8888${url}`;
+
+  const colors = [...new Set(product.variants?.map((v) => v.colorId?.name))];
+  const sizes = [...new Set(product.variants?.map((v) => v.sizeId?.name))];
+
   return (
-    <Container>
-      <TitleBlock>
-        <PageTitle>Chi tiết sản phẩm</PageTitle>
-        <Breadcrumb />
-      </TitleBlock>
+    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "2rem 1rem" }}>
+      <Title level={2} style={{ textAlign: "center" }}>
+        Chi tiết sản phẩm
+      </Title>
+      <Breadcrumb />
 
-      <MainLayout>
-        <GalleryColumn>
-          {/* Nếu sau này bạn có nhiều ảnh thì hiển thị ở đây */}
-          {product.images?.map((img, idx) => (
-            <GalleryImage
-              key={idx}
-              src={img}
-              alt={`Ảnh ${idx + 1}`}
-              onClick={() => setMainImg(img)}
-            />
-          ))}
-        </GalleryColumn>
+      <Row gutter={[32, 32]} style={{ marginTop: 32 }}>
+        <Col xs={24} md={10}>
+          <Image
+            src={fullImgUrl}
+            width="100%"
+            style={{ borderRadius: 12 }}
+            fallback="https://via.placeholder.com/350"
+          />
+          <Row gutter={8} style={{ marginTop: 16 }}>
+            {product.images?.map((img, idx) => (
+              <Col key={idx}>
+                <Image
+                  src={convertImgUrl(img)}
+                  width={60}
+                  height={60}
+                  style={{ borderRadius: 6, cursor: "pointer" }}
+                  onClick={() => setMainImg(img)}
+                />
+              </Col>
+            ))}
+          </Row>
+        </Col>
 
-        <MainImageWrapper>
-          <MainImage src={fullImgUrl} alt={product?.title || "Ảnh sản phẩm"} />
-        </MainImageWrapper>
+        <Col xs={24} md={14}>
+          <Title level={3}>{product.title}</Title>
+          <Paragraph type="secondary">
+            {product.description || "Không có mô tả."}
+          </Paragraph>
+          <Title level={5} style={{ color: "#e53935" }}>
+            {product.price?.toLocaleString()}.000 VNĐ
+          </Title>
 
-        <InfoColumn>
-          <ProductName>{product?.title}</ProductName>
-          <ProductDesc>{product?.description || "Không có mô tả."}</ProductDesc>
-          <ProductPrice>{product?.price?.toLocaleString()}₫</ProductPrice>
-          <ActionButtons>
-            <AddToBagBtn>Thêm vào giỏ hàng</AddToBagBtn>
-            <FavouriteBtn>Yêu thích ♡</FavouriteBtn>
-          </ActionButtons>
-          <Notice>
-            {product?.shippingInformation ||
+          <div style={{ margin: "1rem 0" }}>
+            <Text strong>Chọn màu:</Text>
+            <Select
+              placeholder="Chọn màu"
+              style={{ width: "100%", margin: "0.5rem 0" }}
+              onChange={setSelectedColor}
+              value={selectedColor}
+            >
+              {colors.map((color) => (
+                <Option key={color} value={color}>
+                  {color}
+                </Option>
+              ))}
+            </Select>
+
+            <Text strong>Chọn size:</Text>
+            <Select
+              placeholder="Chọn size"
+              style={{ width: "100%", marginBottom: "1rem" }}
+              onChange={setSelectedSize}
+              value={selectedSize}
+            >
+              {sizes.map((size) => (
+                <Option key={size} value={size}>
+                  {size}
+                </Option>
+              ))}
+            </Select>
+
+            <div style={{ marginTop: "1rem" }}>
+              <Text strong>Số lượng : </Text>
+              <InputNumber
+                min={1}
+                max={stock || 99}
+                value={quantity}
+                onChange={setQuantity}
+                style={{ width: "60px", marginTop: "0.3rem" }}
+                disabled={!selectedVariant || stock <= 0}
+              />
+            </div>
+
+            {selectedColor && selectedSize && (
+              <Text type="danger">Tồn kho: {stock}</Text>
+            )}
+          </div>
+
+          <Button
+            size="large"
+            block
+            style={{
+              margin: "1rem 0",
+              backgroundColor: "#222",
+              color: "#fff",
+              borderColor: "#222",
+            }}
+            disabled={!selectedVariant || stock <= 0}
+            onClick={() => {
+              console.log("Thêm vào giỏ:", {
+                productId: product._id,
+                variantId: selectedVariant._id,
+                quantity,
+              });
+              message.success("Đã thêm vào giỏ hàng");
+            }}
+          >
+            Thêm vào giỏ hàng
+          </Button>
+
+          <Button type="default" block>
+            Yêu thích ♡
+          </Button>
+
+          <Divider />
+          <Text type="secondary">
+            {product.shippingInformation ||
               "Sản phẩm này không áp dụng khuyến mãi."}
-          </Notice>
-        </InfoColumn>
-      </MainLayout>
+          </Text>
+        </Col>
+      </Row>
 
-      <Section>
-        <SectionTitle>Mô tả chi tiết</SectionTitle>
-        <p>{product?.description || "Không có mô tả chi tiết."}</p>
-      </Section>
+      <Card title="Mô tả chi tiết" style={{ marginTop: 40 }}>
+        <Paragraph>
+          {product.description || "Không có mô tả chi tiết."}
+        </Paragraph>
+      </Card>
 
-      <CommentSection>
-        <CommentTitle>Bình luận về sản phẩm</CommentTitle>
-        <CommentForm>
-          <CommentInput rows={2} placeholder="Nhập bình luận của bạn..." />
-          <CommentButton>Gửi</CommentButton>
-        </CommentForm>
-        <CommentList>
-          <CommentItem>
-            <CommentAuthor>Nguyễn Văn A</CommentAuthor>
-            <CommentText>Sản phẩm rất đẹp, chất lượng tốt!</CommentText>
-          </CommentItem>
-          <CommentItem>
-            <CommentAuthor>Trần Thị B</CommentAuthor>
-            <CommentText>Giao hàng nhanh, đóng gói cẩn thận.</CommentText>
-          </CommentItem>
-        </CommentList>
-      </CommentSection>
-    </Container>
+      <Card title="Bình luận về sản phẩm" style={{ marginTop: 40 }}>
+        <Paragraph>
+          <strong>Nguyễn Văn Đạt:</strong> Sản phẩm rất đẹp, chất lượng tốt!
+        </Paragraph>
+        <Paragraph>
+          <strong>Trần Thị Quốc:</strong> Giao hàng nhanh, đóng gói cẩn thận.
+        </Paragraph>
+      </Card>
+    </div>
   );
 };
 

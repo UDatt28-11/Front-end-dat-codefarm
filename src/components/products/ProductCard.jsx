@@ -19,6 +19,7 @@ const ImageWrapper = styled.div`
 
 const ProductImage = styled.img`
   width: 100%;
+  margin-bottom: 15px;
   height: 300px;
   object-fit: cover;
   border-radius: 0.75rem;
@@ -53,6 +54,7 @@ const ProductName = styled.h6`
 
 const PriceBlock = styled.div`
   margin-bottom: 0.5rem;
+  // margin-top: 10px;
   span {
     margin-left: 0.5rem;
   }
@@ -103,10 +105,10 @@ const ProductCard = ({ product }) => {
           <ProductName>{product.title}</ProductName>
         </Link>
         <PriceBlock>
-          <strong>${product.price?.toFixed(3)}</strong>
+          <strong>{product.price?.toFixed(3)} VNĐ</strong>
           {product.oldPrice && (
             <span style={{ textDecoration: "line-through", color: "#888" }}>
-              ${product.oldPrice.toFixed(3)}
+              {product.oldPrice.toFixed(3)}
             </span>
           )}
           {product.discount && (

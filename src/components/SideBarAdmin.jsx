@@ -10,6 +10,9 @@ import {
   SettingOutlined,
   PlusCircleOutlined,
   UnorderedListOutlined,
+  BgColorsOutlined,
+  FormatPainterOutlined,
+  FontSizeOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
@@ -103,6 +106,68 @@ const SidebarAdmin = () => {
       ],
     },
     {
+      key: "colors",
+      icon: <BgColorsOutlined />,
+      label: "Colors",
+      children: [
+        {
+          key: "color-list",
+          icon: <FormatPainterOutlined />,
+          label: (
+            <Link
+              to="/admin/colors"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Color List
+            </Link>
+          ),
+        },
+        {
+          key: "color-add",
+          icon: <PlusCircleOutlined />,
+          label: (
+            <Link
+              to="/admin/colors/add"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Add Color
+            </Link>
+          ),
+        },
+      ],
+    },
+    {
+      key: "sizes",
+      icon: <FontSizeOutlined />,
+      label: "Sizes",
+      children: [
+        {
+          key: "size-list",
+          icon: <UnorderedListOutlined />,
+          label: (
+            <Link
+              to="/admin/sizes"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Size List
+            </Link>
+          ),
+        },
+        {
+          key: "size-add",
+          icon: <PlusCircleOutlined />,
+          label: (
+            <Link
+              to="/admin/sizes/add"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Add Size
+            </Link>
+          ),
+        },
+      ],
+    },
+    {
       key: "orders",
       icon: <ShoppingCartOutlined />,
       label: (
@@ -180,28 +245,18 @@ const SidebarAdmin = () => {
         }}
       />
       <style>{`
-        .ant-menu-dark,
-        .ant-menu-dark .ant-menu,
-        .ant-menu-dark .ant-menu-submenu,
-        .ant-menu-dark .ant-menu-submenu-title,
-        .ant-menu-dark .ant-menu-item {
-          
-        }
         .ant-menu-dark .ant-menu-item-selected {
           color: #fff !important;
           font-weight: 700;
-          
         }
         .ant-menu-dark .ant-menu-item,
         .ant-menu-dark .ant-menu-submenu-title {
           margin: 6px 0;
-          
         }
         .ant-menu-dark .ant-menu-item:hover,
         .ant-menu-dark .ant-menu-submenu-title:hover {
           background: #1e293b !important;
           color: #fff !important;
-          
         }
         .ant-layout-sider,
         .ant-layout-sider-children {
@@ -214,7 +269,6 @@ const SidebarAdmin = () => {
           font-size: 22px !important;
           transition: background 0.2s;
         }
-      
       `}</style>
     </Sider>
   );
